@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="UserMap">
+
+    <typeAlias alias="user_info" type="com.huashang.dao.bean.UserInfo"/>
+
+    <resultMap class="user_info" id="result_user_login">
+        <result property="user_name" column="user_name"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <!-- 操作 -->
+    <select id="findUserByUserName" resultMap="result_user_login">
+        select user_name, password from user_info where user_name=#user_name#
+        <dynamic>
+            <isNotEmpty property="password">
+                and password=#password#
+            </isNotEmpty>
+        </dynamic>
+    </select>
+
+</sqlMap>
